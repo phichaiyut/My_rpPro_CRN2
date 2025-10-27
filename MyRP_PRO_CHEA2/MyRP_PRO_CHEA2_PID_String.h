@@ -467,7 +467,7 @@ void TrackSelectB(int spd, String x) {
 void FF(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -481,7 +481,7 @@ void FF(int Speed, String select) {
 void FFC(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -495,7 +495,7 @@ void FFC(int Speed, String select) {
 void FFC2(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -509,7 +509,7 @@ void FFC2(int Speed, String select) {
 void FFL(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -523,7 +523,7 @@ void FFL(int Speed, String select) {
 void FFL2(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -537,7 +537,7 @@ void FFL2(int Speed, String select) {
 void FFR(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -552,7 +552,7 @@ void FFR(int Speed, String select) {
 void FFR2(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
    PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -566,7 +566,7 @@ void FFR2(int Speed, String select) {
 void FFWhite(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -607,7 +607,7 @@ void FFBlack(int SpeedL,int SpeedR, String select) {
 void FFNUM(int Speed, String select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -621,7 +621,7 @@ void FFNUM(int Speed, String select, int numm) {
 void FF_DISTANCE(int Speed, String select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed);
+    softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     if (DistanceValue() <=  DisT) {
@@ -635,7 +635,7 @@ void FF_DISTANCE(int Speed, String select, int DisT) {
 void BB(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -650,7 +650,7 @@ void BB(int Speed, String select) {
 void BBC(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -664,7 +664,7 @@ void BBC(int Speed, String select) {
 void BBC2(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -678,7 +678,7 @@ void BBC2(int Speed, String select) {
 void BBL(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -692,7 +692,7 @@ void BBL(int Speed, String select) {
 void BBR(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -706,7 +706,7 @@ void BBR(int Speed, String select) {
 void BBNUM(int Speed, String select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -721,7 +721,7 @@ void BBNUM(int Speed, String select, int numm) {
 void BBWhite(int Speed, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -762,7 +762,7 @@ void BBBlack(int SpeedL,int SpeedR, String select) {
 void BB_DISTANCE(int Speed, String select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed);
+    softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP,PID_KD);
     if (DistanceValue() >=  DisT) {
@@ -824,7 +824,7 @@ void BB_DISTANCE(int Speed, String select, int DisT) {
 void FF(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -838,7 +838,7 @@ void FF(int Speed,float Kp,float Kd, String select) {
 void FFC(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -852,7 +852,7 @@ void FFC(int Speed,float Kp,float Kd, String select) {
 void FFC2(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -867,7 +867,7 @@ void FFC2(int Speed,float Kp,float Kd, String select) {
 void FFL(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -881,7 +881,7 @@ void FFL(int Speed,float Kp,float Kd, String select) {
 void FFL2(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -895,7 +895,7 @@ void FFL2(int Speed,float Kp,float Kd, String select) {
 void FFR(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -910,7 +910,7 @@ void FFR(int Speed,float Kp,float Kd, String select) {
 void FFR2(int Speed, float Kp,float Kd,String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
    PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -924,7 +924,7 @@ void FFR2(int Speed, float Kp,float Kd,String select) {
 void FFWhite(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -939,7 +939,7 @@ void FFWhite(int Speed,float Kp,float Kd, String select) {
 void FFNUM(int Speed,float Kp,float Kd, String select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -953,7 +953,7 @@ void FFNUM(int Speed,float Kp,float Kd, String select, int numm) {
 void FF_DISTANCE(int Speed,float Kp,float Kd, String select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     if (DistanceValue() <=  DisT) {
@@ -967,7 +967,7 @@ void FF_DISTANCE(int Speed,float Kp,float Kd, String select, int DisT) {
 void BB(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartf(Speed,Kp,Kd);
+    softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -982,7 +982,7 @@ void BB(int Speed,float Kp,float Kd, String select) {
 void BBC(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -997,7 +997,7 @@ void BBC(int Speed,float Kp,float Kd, String select) {
 void BBC2(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1012,7 +1012,7 @@ void BBC2(int Speed,float Kp,float Kd, String select) {
 void BBL(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1026,7 +1026,7 @@ void BBL(int Speed,float Kp,float Kd, String select) {
 void BBR(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1040,7 +1040,7 @@ void BBR(int Speed,float Kp,float Kd, String select) {
 void BBNUM(int Speed,float Kp,float Kd, String select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1055,7 +1055,7 @@ void BBNUM(int Speed,float Kp,float Kd, String select, int numm) {
 void BBWhite(int Speed,float Kp,float Kd, String select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1069,7 +1069,7 @@ void BBWhite(int Speed,float Kp,float Kd, String select) {
 void BB_DISTANCE(int Speed,float Kp,float Kd, String select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-    softstartb(Speed,Kp,Kd);
+    softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     if (DistanceValue() >=  DisT) {

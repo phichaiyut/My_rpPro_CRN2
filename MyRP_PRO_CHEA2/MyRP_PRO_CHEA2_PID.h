@@ -54,7 +54,9 @@ int readPositionF(int Track, int noise) {
      if (dottedline) {
       return last_value;
     }
-    if (last_value < (NUM_SENSORS - 1) * 1000 / 2) {
+    // if (last_value < (NUM_SENSORS - 1) * 1000 / 2)
+    if (last_value < set_position)
+    {
       return 0;
     } else {
       return (NUM_SENSORS - 1) * 1000;
@@ -86,7 +88,9 @@ int readPositionB(int Track, int noise) {
      if (dottedline) {
       return last_value;
     }
-    if (last_value < (NUM_SENSORS - 1) * 1000 / 2) {
+    // if (last_value < (NUM_SENSORS - 1) * 1000 / 2)
+    if (last_value < set_position)
+     {
       return 0;
     } else {
       return (NUM_SENSORS - 1) * 1000;
@@ -209,8 +213,15 @@ switch (ModePidStatus) {
 
 
 
-void softstartf(int target_speed) {
-  if(modesoftstart == 1){
+void softstartf(int target_speed, char select) {
+
+  if(select == 'p' || select == 'P') {
+    // ไม่ใช้ softstart
+  } else {
+    // ใช้ softstart
+     if(modesoftstart == 1){
+     BaseSpeed = target_speed;
+     InitialSpeed();
   const int ramp_step = 3;
   int current_speed = 0; // PWM
   int actual_target_speed = min(LeftBaseSpeed, RightBaseSpeed);  // ← เปลี่ยนชื่อ
@@ -226,10 +237,17 @@ void softstartf(int target_speed) {
     PIDF(LeftBaseSpeed, RightBaseSpeed, _kp, _kd);
   }
   }
+  }
+
 }
 
-void softstartf(int target_speed,float kp,float kd) {
+void softstartf(int target_speed,float kp,float kd,char select) {
+  if(select == 'p' || select == 'P') {
+    // ไม่ใช้ softstart
+  } else {
   if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
   const int ramp_step = 3;
   int current_speed = 0; // PWM
   int actual_target_speed = min(LeftBaseSpeed, RightBaseSpeed);  // ← เปลี่ยนชื่อ
@@ -246,12 +264,18 @@ void softstartf(int target_speed,float kp,float kd) {
   }
   }
 }
+}
 
 
 
 
-void softstartb(int target_speed){
+void softstartb(int target_speed, char select){
+  if(select == 'p' || select == 'P') {
+    // ไม่ใช้ softstart
+  } else {
   if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
   const int ramp_step = 3;
   int current_speed = 0; // PWM
   int actual_target_speed = min(BackLeftBaseSpeed, BackRightBaseSpeed);  // ← เปลี่ยนชื่อ
@@ -268,9 +292,15 @@ void softstartb(int target_speed){
   }
   }
 }
+}
 
-void softstartb(int target_speed ,float kp,float kd){
+void softstartb(int target_speed ,float kp,float kd,char select){
+  if(select == 'p' || select == 'P') {
+    // ไม่ใช้ softstart
+  } else {
   if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
   const int ramp_step = 3;
   int current_speed = 0; // PWM
   int actual_target_speed = min(BackLeftBaseSpeed, BackRightBaseSpeed);  // ← เปลี่ยนชื่อ
@@ -287,7 +317,115 @@ void softstartb(int target_speed ,float kp,float kd){
   }
   }
 }
+}
 
+
+//string
+void softstartf(int target_speed, String select) {
+
+  if(select == "p" || select == "P") {
+    // ไม่ใช้ softstart
+  } else {
+    // ใช้ softstart
+     if(modesoftstart == 1){
+      BaseSpeed = target_speed;
+     InitialSpeed();
+  const int ramp_step = 3;
+  int current_speed = 0; // PWM
+  int actual_target_speed = min(LeftBaseSpeed, RightBaseSpeed);  // ← เปลี่ยนชื่อ
+  float _kp = PID_KP, _kd = PID_KP; 
+  while (current_speed < actual_target_speed) {
+    current_speed += ramp_step;
+    if (current_speed > actual_target_speed) {
+      current_speed = actual_target_speed;
+    }
+    delay(ramp_delay);
+    BaseSpeed = current_speed;   // ← เดิมเขียนผิดเป็น target_speed
+    InitialSpeed();
+    PIDF(LeftBaseSpeed, RightBaseSpeed, _kp, _kd);
+  }
+  }
+  }
+
+}
+
+void softstartf(int target_speed,float kp,float kd,String select) {
+  if(select == "p" || select == "P") {
+    // ไม่ใช้ softstart
+  } else {
+  if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
+  const int ramp_step = 3;
+  int current_speed = 0; // PWM
+  int actual_target_speed = min(LeftBaseSpeed, RightBaseSpeed);  // ← เปลี่ยนชื่อ
+  //float _kp = PID_KP, _kd = PID_KP; 
+  while (current_speed < actual_target_speed) {
+    current_speed += ramp_step;
+    if (current_speed > actual_target_speed) {
+      current_speed = actual_target_speed;
+    }
+    delay(ramp_delay);
+    BaseSpeed = current_speed;   // ← เดิมเขียนผิดเป็น target_speed
+    InitialSpeed();
+    PIDF(LeftBaseSpeed, RightBaseSpeed, kp, kd);
+  }
+  }
+}
+}
+
+
+
+
+void softstartb(int target_speed, String select){
+  if(select == "p" || select == "P") {
+    // ไม่ใช้ softstart
+  } else {
+  if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
+  const int ramp_step = 3;
+  int current_speed = 0; // PWM
+  int actual_target_speed = min(BackLeftBaseSpeed, BackRightBaseSpeed);  // ← เปลี่ยนชื่อ
+  float _kp = PID_KP_Back, _kd = PID_KP_Back; 
+  while (current_speed < actual_target_speed) {
+    current_speed += ramp_step;
+    if (current_speed > actual_target_speed) {
+      current_speed = actual_target_speed;
+    }
+    delay(ramp_delay);
+    BaseSpeed = current_speed;   // ← เดิมเขียนผิดเป็น target_speed
+    InitialSpeed();
+    PIDB(BackLeftBaseSpeed, BackRightBaseSpeed, _kp, _kd);
+  }
+  }
+}
+}
+
+void softstartb(int target_speed ,float kp,float kd,String select){
+  if(select == "p" || select == "P") {
+    // ไม่ใช้ softstart
+  } else {
+  if(modesoftstart == 1){
+    BaseSpeed = target_speed;
+     InitialSpeed();
+  const int ramp_step = 3;
+  int current_speed = 0; // PWM
+  int actual_target_speed = min(BackLeftBaseSpeed, BackRightBaseSpeed);  // ← เปลี่ยนชื่อ
+ // float _kp = PID_KP_Back, _kd = PID_KP_Back; 
+  while (current_speed < actual_target_speed) {
+    current_speed += ramp_step;
+    if (current_speed > actual_target_speed) {
+      current_speed = actual_target_speed;
+    }
+    delay(ramp_delay);
+    BaseSpeed = current_speed;   // ← เดิมเขียนผิดเป็น target_speed
+    InitialSpeed();
+    PIDB(BackLeftBaseSpeed, BackRightBaseSpeed, kp, kd);
+  }
+  }
+}
+}
 
 
 void FFtimer(int baseSpeed, int totalTime) {
@@ -648,7 +786,7 @@ void TrackSelectB(int spd, char x) {
 void FF(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -662,7 +800,7 @@ void FF(int Speed, char select) {
 void FFC(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -676,7 +814,7 @@ void FFC(int Speed, char select) {
 void FFC2(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -690,7 +828,7 @@ void FFC2(int Speed, char select) {
 void FFL(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -704,7 +842,7 @@ void FFL(int Speed, char select) {
 void FFL2(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -718,7 +856,7 @@ void FFL2(int Speed, char select) {
 void FFR(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -733,7 +871,7 @@ void FFR(int Speed, char select) {
 void FFR2(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
    PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -747,7 +885,7 @@ void FFR2(int Speed, char select) {
 void FFWhite(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -788,7 +926,7 @@ void FFBlack(int SpeedL,int SpeedR, char select) {
 void FFNUM(int Speed, char select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     ReadCalibrateF();
@@ -802,7 +940,7 @@ void FFNUM(int Speed, char select, int numm) {
 void FF_DISTANCE(int Speed, char select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed);
+  softstartf(Speed,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,PID_KP,PID_KD);
     if (DistanceValue() <=  DisT) {
@@ -816,7 +954,7 @@ void FF_DISTANCE(int Speed, char select, int DisT) {
 void BB(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -831,7 +969,7 @@ void BB(int Speed, char select) {
 void BBC(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -845,7 +983,7 @@ void BBC(int Speed, char select) {
 void BBC2(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -859,7 +997,7 @@ void BBC2(int Speed, char select) {
 void BBL(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -873,7 +1011,7 @@ void BBL(int Speed, char select) {
 void BBR(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -887,7 +1025,7 @@ void BBR(int Speed, char select) {
 void BBNUM(int Speed, char select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -902,7 +1040,7 @@ void BBNUM(int Speed, char select, int numm) {
 void BBWhite(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -943,7 +1081,7 @@ void BBBlack(int SpeedL,int SpeedR, char select) {
 void BB_DISTANCE(int Speed, char select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP,PID_KD);
     if (DistanceValue() >=  DisT) {
@@ -1006,7 +1144,7 @@ void BBT(int baseSpeed,float Kp,float Kd, int totalTime) {
 void FF(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1020,7 +1158,7 @@ void FF(int Speed,float Kp,float Kd, char select) {
 void FFC(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1034,7 +1172,7 @@ void FFC(int Speed,float Kp,float Kd, char select) {
 void FFC2(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1049,7 +1187,7 @@ void FFC2(int Speed,float Kp,float Kd, char select) {
 void FFL(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1063,7 +1201,7 @@ void FFL(int Speed,float Kp,float Kd, char select) {
 void FFL2(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1077,7 +1215,7 @@ void FFL2(int Speed,float Kp,float Kd, char select) {
 void FFR(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1092,7 +1230,7 @@ void FFR(int Speed,float Kp,float Kd, char select) {
 void FFR2(int Speed, float Kp,float Kd,char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
    PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1106,7 +1244,7 @@ void FFR2(int Speed, float Kp,float Kd,char select) {
 void FFWhite(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1121,7 +1259,7 @@ void FFWhite(int Speed,float Kp,float Kd, char select) {
 void FFNUM(int Speed,float Kp,float Kd, char select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     ReadCalibrateF();
@@ -1135,7 +1273,7 @@ void FFNUM(int Speed,float Kp,float Kd, char select, int numm) {
 void FF_DISTANCE(int Speed,float Kp,float Kd, char select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartf(Speed,Kp,Kd);
+  softstartf(Speed,Kp,Kd,select);
   while (1) {
     PIDF(LeftBaseSpeed,RightBaseSpeed,Kp,Kd);
     if (DistanceValue() <=  DisT) {
@@ -1149,7 +1287,7 @@ void FF_DISTANCE(int Speed,float Kp,float Kd, char select, int DisT) {
 void BB(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1164,7 +1302,7 @@ void BB(int Speed,float Kp,float Kd, char select) {
 void BBC(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1179,7 +1317,7 @@ void BBC(int Speed,float Kp,float Kd, char select) {
 void BBC2(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1194,7 +1332,7 @@ void BBC2(int Speed,float Kp,float Kd, char select) {
 void BBL(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1208,7 +1346,7 @@ void BBL(int Speed,float Kp,float Kd, char select) {
 void BBR(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1222,7 +1360,7 @@ void BBR(int Speed,float Kp,float Kd, char select) {
 void BBNUM(int Speed,float Kp,float Kd, char select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1237,7 +1375,7 @@ void BBNUM(int Speed,float Kp,float Kd, char select, int numm) {
 void BBWhite(int Speed,float Kp,float Kd, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     ReadCalibrateB();
@@ -1251,7 +1389,7 @@ void BBWhite(int Speed,float Kp,float Kd, char select) {
 void BB_DISTANCE(int Speed,float Kp,float Kd, char select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed,Kp,Kd);
+  softstartb(Speed,Kp,Kd,select);
   while (1) {
     PIDB(BackLeftBaseSpeed,BackRightBaseSpeed,Kp,Kd);
     if (DistanceValue() >=  DisT) {
@@ -1418,7 +1556,7 @@ void _BBtimer(int baseSpeed, int totalTime) {
 void _BB(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1433,7 +1571,7 @@ void _BB(int Speed, char select) {
 void _BBC(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1447,7 +1585,7 @@ void _BBC(int Speed, char select) {
 void _BBC2(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1461,7 +1599,7 @@ void _BBC2(int Speed, char select) {
 void _BBL(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1475,7 +1613,7 @@ void _BBL(int Speed, char select) {
 void _BBR(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1489,7 +1627,7 @@ void _BBR(int Speed, char select) {
 void _BBNUM(int Speed, char select, int numm) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1504,7 +1642,7 @@ void _BBNUM(int Speed, char select, int numm) {
 void _BBWhite(int Speed, char select) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP_Back,PID_KD_Back);
     ReadCalibrateB();
@@ -1545,7 +1683,7 @@ void _BBBlack(int SpeedL,int SpeedR, char select) {
 void _BB_DISTANCE(int Speed, char select, int DisT) {
 	BaseSpeed = Speed;
 	InitialSpeed();
-  softstartb(Speed);
+  softstartb(Speed,select);
   while (1) {
     PIDB1(BackLeftBaseSpeed,BackRightBaseSpeed,PID_KP,PID_KD);
     if (DistanceValue() >=  DisT) {

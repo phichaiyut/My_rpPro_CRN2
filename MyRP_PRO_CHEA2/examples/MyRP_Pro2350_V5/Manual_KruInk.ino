@@ -12,6 +12,10 @@ bw_gyro(50, 0.85,  'คำสั่งถึงทางแยก') ;  //bw_gyro
 bw_gyro(50, 0.85, 30, 10);  //bw_gyro(ความเร็ว, Kp, ระยะทาง, เบรค);
 bw_gyro(50, 50, 0.85, 30, 10);  //bw_gyro(ความเร็วซ้าย, ความเร็วขวา, Kp, ระยะทาง, เบรค);
 
+rotate_left(20, 90, 10);   // rotate_left(ความเร็ว, 4อิงศา, ค่าเบรค)
+rotate_right(20, 90, 10); 
+    
+
 Spin_left_gyro(30, 90, 10); //Spin_left_gyro(ความเร็ว, องศา, เบรค);
 Spin_right_gyro(30, 90, 10); //Spin_right_gyro(ความเร็ว, องศา, เบรค);
 
@@ -146,7 +150,11 @@ _________________________________เซนเซอร์หลัง___________
 // >> BBtimer(ความเร็ว,Kp,Kd,เวลา);  // วิ่งตามเส้นด้วย PID Timer ไปข้างหลัง
 
 
-
+    arm_up();
+    arm_down();
+    arm_close();
+    arm_open();
+    arm_big();
 
 // readSerialCommand();  //สำหรับตั้งค่าเซอร์โวผ่าน Serial
   servo_36.detach();

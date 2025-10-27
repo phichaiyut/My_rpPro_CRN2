@@ -10,6 +10,7 @@ uint8_t C_PIN[2] = {46, 47};
 
 int Ref = 0;
 int RefC = 0;
+int RefCali = 1000;
 
 int LineColor = 0;
 
@@ -19,6 +20,10 @@ void TrackLineColor(int Col) {
   LineColor = Col;
 }
 
+void set_value_calibate(int set_calibate){
+RefCali = set_calibate;
+
+}
 void ReadF() {
   
 for (int i = 0; i < NUM_SENSORS; i++) {
@@ -53,7 +58,7 @@ void ReadCalibrateF() {
   for (int i = 0; i < NUM_SENSORS; i++) {
     int x = map(F[i], sensorMin_A[i], sensorMax_A[i], 1000, 0);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali) x = 1000;
     F[i] = x;
   }
   }
@@ -61,7 +66,7 @@ void ReadCalibrateF() {
       for (int i = 0; i < NUM_SENSORS; i++) {
     int x = map(F[i], sensorMin_A[i], sensorMax_A[i], 0, 1000);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali) x = 1000;
     F[i] = x;
   }
 
@@ -75,7 +80,7 @@ void ReadCalibrateC() {
   for (int i = 0; i < 2; i++) {
     int x = map(C[i], sensorMin_C[i], sensorMax_C[i], 1000, 0);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali) x = 1000;
     C[i] = x;
   }
 }
@@ -83,7 +88,7 @@ else{
 for (int i = 0; i < 2; i++) {
     int x = map(C[i], sensorMin_C[i], sensorMax_C[i], 0, 1000);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali) x = 1000;
     C[i] = x;
   }
 }
@@ -95,7 +100,7 @@ void ReadCalibrateB() {
   for (int i = 0; i < NUM_SENSORS; i++) {
     int x = map(B[i], sensorMin_B[i], sensorMax_B[i], 1000, 0);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali ) x = 1000;
     B[i] = x;
   }
 }
@@ -103,7 +108,7 @@ else {
    for (int i = 0; i < NUM_SENSORS; i++) {
     int x = map(B[i], sensorMin_B[i], sensorMax_B[i], 0, 1000);
     if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
+    if (x > RefCali) x = 1000;
     B[i] = x;
   }
 }

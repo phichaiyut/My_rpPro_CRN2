@@ -1,4 +1,5 @@
 void _setting() {
+  set_value_calibate(1000); // เซตค่า Recalibate 
   RefLineValue(400);        // ค่าในการจับเส้น เซนเซอร์หน้า หลัง
   RefCenterLineValue(800);  // ค่าในการจับเส้น เซนเซอร์คู่กลาง
   TrackLineColor(0);        // 0 >> พื้นขาวเส้นดำ ||  1 >> พื้นดำเส้นขาว
