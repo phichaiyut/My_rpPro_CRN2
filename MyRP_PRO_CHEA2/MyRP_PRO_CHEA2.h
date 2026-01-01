@@ -4,7 +4,6 @@
 #include <MyRP_PRO_CHEA2_ForwardBackwardAndTurn.h> 
 #include <MyRP_PRO_CHEA2_Turn.h> 
 #include <MyRP_PRO_CHEA2_PID.h> 
-#include <MyRP_PRO_CHEA2_PID_String.h> 
 #include <MyRP_PRO_CHEA2_GYRO.h> 
 
 int OpenL,OpenR;
@@ -22,45 +21,7 @@ int RightOpen2;   // เซอร์โวซ้ายตัวที่ 2
 
 
 
-void setOpen(int degree1,int degree2){
-  OpenL = degree1;
-  OpenR = degree2;
-}
 
-void setOpen2(int degree1,int degree2){
-  OpenL2 = degree1;
-  OpenR2 = degree2;
-}
-
-void setOpenMax(int degree1,int degree2){
-  OpenLMax = degree1;
-  OpenRMax = degree2;
-}
-
-void setClose(int degree1,int degree2){
-  CloseL = degree1;
-  CloseR = degree2;
-}
-
-void setCloseSmall(int degree1,int degree2){
-  CloseLSmall = degree1;
-  CloseRSmall = degree2;
-}
-
-void setUpDown(int degree1,int degree2){
-  Up = degree1; 
-  Down = degree2;
-}
-
-void setOpenLeft(int degree1,int degree2){
-  LeftOpen1 = degree1;
-  LeftOpen2 = degree2;
-}
-
-void setOpenRight(int degree1,int degree2){
-  RightOpen1 = degree1;
-  RightOpen2 = degree2;
-}
 
 void OK(){
 
@@ -100,7 +61,7 @@ void readSerialCommand() {
         Serial.println("ออกจากโหมดควบคุม Serial แล้ว");
         break; // ออกจาก while loop
       }
-
+      input.toUpperCase();
       if (input.startsWith("S1")) {
         int angle = input.substring(2).toInt();
         moveServo(1, angle);

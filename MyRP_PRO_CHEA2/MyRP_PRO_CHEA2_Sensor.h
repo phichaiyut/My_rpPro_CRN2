@@ -1,7 +1,7 @@
 #define BUZZER_PIN 32
 #define NUM_SENSORS 8
 
-#define DIST A3
+// #define DIST A0
 int F[NUM_SENSORS], B[NUM_SENSORS], C[2];
 
 uint8_t F_PIN[NUM_SENSORS] = { 0, 1, 2, 3, 4, 5, 6, 7 };
@@ -14,7 +14,7 @@ int RefCali = 1000;
 
 int LineColor = 0;
 
-
+int  DIST =  A0;
 
 void TrackLineColor(int Col) {
   LineColor = Col;
@@ -43,6 +43,11 @@ void ReadB() {
 
 }
 
+void SetAnalogDistance(int x){
+
+  DIST = x;
+
+}
 void ReadC() {
   for (int i = 0; i < 2; i++) {  
   C[i] = analogRead(C_PIN[i]); 
@@ -56,17 +61,17 @@ void ReadCalibrateF() {
   ReadF();
   if (LineColor == 0) {
   for (int i = 0; i < NUM_SENSORS; i++) {
-    int x = map(F[i], sensorMin_A[i], sensorMax_A[i], 1000, 0);
+    int x = map(F[i], sensorMinA[i], sensorMaxA[i], RefCali, 0);
     if (x < 0) x = 0;
-    if (x > RefCali) x = 1000;
+    if (x > RefCali) x = RefCali;
     F[i] = x;
   }
   }
   else{
       for (int i = 0; i < NUM_SENSORS; i++) {
-    int x = map(F[i], sensorMin_A[i], sensorMax_A[i], 0, 1000);
+    int x = map(F[i], sensorMinA[i], sensorMaxA[i], 0, RefCali);
     if (x < 0) x = 0;
-    if (x > RefCali) x = 1000;
+    if (x > RefCali) x = RefCali;
     F[i] = x;
   }
 
@@ -78,17 +83,17 @@ void ReadCalibrateC() {
   ReadC();
   if (LineColor == 0) {
   for (int i = 0; i < 2; i++) {
-    int x = map(C[i], sensorMin_C[i], sensorMax_C[i], 1000, 0);
+    int x = map(C[i], sensorMinC[i], sensorMaxC[i], RefCali, 0);
     if (x < 0) x = 0;
-    if (x > RefCali) x = 1000;
+    if (x > RefCali) x = RefCali;
     C[i] = x;
   }
 }
 else{
 for (int i = 0; i < 2; i++) {
-    int x = map(C[i], sensorMin_C[i], sensorMax_C[i], 0, 1000);
+    int x = map(C[i], sensorMinC[i], sensorMaxC[i], 0, RefCali);
     if (x < 0) x = 0;
-    if (x > RefCali) x = 1000;
+    if (x > RefCali) x = RefCali;
     C[i] = x;
   }
 }
@@ -98,17 +103,17 @@ void ReadCalibrateB() {
   ReadB();
   if (LineColor == 0) {
   for (int i = 0; i < NUM_SENSORS; i++) {
-    int x = map(B[i], sensorMin_B[i], sensorMax_B[i], 1000, 0);
+    int x = map(B[i], sensorMinB[i], sensorMaxB[i], RefCali, 0);
     if (x < 0) x = 0;
-    if (x > RefCali ) x = 1000;
+    if (x > RefCali ) x = RefCali;
     B[i] = x;
   }
 }
 else {
    for (int i = 0; i < NUM_SENSORS; i++) {
-    int x = map(B[i], sensorMin_B[i], sensorMax_B[i], 0, 1000);
+    int x = map(B[i], sensorMinB[i], sensorMaxB[i], 0, RefCali);
     if (x < 0) x = 0;
-    if (x > RefCali) x = 1000;
+    if (x > RefCali) x = RefCali;
     B[i] = x;
   }
 }
@@ -269,9 +274,9 @@ int DistanceValue() {
 void SerialDistance() {
   while (1) {
     Serial.print("ADC : ");
-    Serial.print(analogRead(DIST));
-    Serial.print(" ");
-    Serial.println(DistanceValue());
+    Serial.println(analogRead(DIST));
+   // Serial.print(" ");
+   // Serial.println(DistanceValue());
     delay(100);
   }
 }

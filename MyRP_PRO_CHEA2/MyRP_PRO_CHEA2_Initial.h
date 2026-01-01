@@ -1,7 +1,7 @@
 int BaseSpeed, LeftBaseSpeed, RightBaseSpeed, BackLeftBaseSpeed, BackRightBaseSpeed;
 float PID_KP, PID_KD;
 float PID_KP_Back, PID_KD_Back;
-
+// int LastError_F, LastError_B;
 int L[10], R[10];
 int BL[10], BR[10];
 float KP[10], KD[10];
@@ -41,6 +41,7 @@ void Set_KP_KD_Back(int ch, float kp,float kd){
 
 
 void InitialSpeed() {
+//  LastError_F   = 3500, LastError_B = 3500;
 if (BaseSpeed <= 10) {
     LeftBaseSpeed = BaseSpeed - L[SPD_10];
     RightBaseSpeed = BaseSpeed - R[SPD_10];

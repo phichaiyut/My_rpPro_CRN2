@@ -230,6 +230,29 @@ void BackCenterC() {
   }
 }
 
+
+void BackToCenterCB() {
+	BZon();
+   Motor(-bctL, -bctR);
+    delay(20);
+    ReadCalibrateC();
+    while (1) {
+      Motor(-bctL, -bctR);
+      ReadCalibrateC();
+     if (C[CCL] > RefC || C[CCR] > RefC)
+    //  if (analogRead(46) <  (sensorMin_C[0]+md_sensorC(0))/2 || analogRead(47) < (sensorMin_C[1]+md_sensorC(1))/2)
+      {
+      delay(6000/tct);
+      Motor(tct, tct);
+      delay(5);
+      MotorStop();
+      BZoff();
+       break;
+      }
+    }
+}
+
+
 void TurnLeft() {
   Motor(-LTurnSpdL, LTurnSpdR);
   delay(TurnDelayL);
@@ -466,4 +489,105 @@ void BTurnRight() {
       break;
     }
   }
+}
+
+
+
+void Back_TurnL() {
+  MotorStop();
+  delay(5);
+
+  /* 1️⃣ สะบัดแรง */
+  Motor(5, -tspd);
+  delay(35);
+
+  /* 2️⃣ รอจนเส้นพ้นกลาง + ซ้าย */
+  while (1) {
+    ReadCalibrateF();
+
+    // เซนเซอร์กลางและซ้ายหลุดเส้น
+    if (F[3] < Ref && F[2] < Ref) break;
+  }
+
+  /* 3️⃣ หมุนช้าหาเส้นใหม่ */
+  while (1) {
+    ReadCalibrateF();
+    Motor(5, -tspd / 2);
+
+    // เริ่มแตะเส้นใหม่
+    if (F[3] >= Ref || F[4] >= Ref) break;
+  }
+
+  /* 4️⃣ จับเส้นนิ่ม */
+  while (1) {
+    ReadCalibrateF();
+    Motor(5, -tspd / 2);
+
+    if (F[3] >= Ref && F[4] >= Ref) {
+      Motor(5, tspd );
+      delay(4);
+      MotorStop();
+      break;
+    }
+  }
+}
+
+
+void Back_TurnR() {
+  MotorStop();
+  delay(5);
+
+  /* 1️⃣ สะบัดแรง */
+  Motor(-tspd, 5);     // ขวาถอย
+  delay(35);
+
+  /* 2️⃣ รอจนเส้นพ้นกลาง + ขวา */
+  while (1) {
+    ReadCalibrateF();
+
+    // เซนเซอร์กลางและขวาหลุดเส้น
+    if (F[2] < Ref && F[3] < Ref) break;
+  }
+
+  /* 3️⃣ หมุนช้าหาเส้นใหม่ */
+  while (1) {
+    ReadCalibrateF();
+    Motor(-tspd / 2, 5);
+
+    // เริ่มแตะเส้นใหม่
+    if (F[3] >= Ref || F[4] >= Ref) break;
+  }
+
+  /* 4️⃣ จับเส้นนิ่ม */
+  while (1) {
+    ReadCalibrateF();
+    Motor(-tspd / 2, 5);
+
+    if (F[3] >= Ref && F[4] >= Ref) {
+      Motor(tspd, 5);
+      delay(4);
+      MotorStop();
+      break;
+    }
+  }
+}
+
+
+void ToSensorBack(){
+
+BZon();
+     Motor(tctL, tctR);
+    delay(20);
+    while (1) {
+       Motor(tctL, tctR);
+      ReadCalibrateB();
+      if ((B[0] > Ref || B[7] > Ref)) {
+         Motor(-tct, -tct);
+        delay(5);
+        MotorShot();
+        BZoff();
+        break;
+      }
+    }
+
 }

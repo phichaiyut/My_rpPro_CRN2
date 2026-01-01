@@ -553,7 +553,7 @@ void fw_gyro_dist(int Speed, float kp,  char select,int dist)
         int leftSpeed  = constrain(LeftBaseSpeed - corr, -100, 100);
         int rightSpeed = constrain(RightBaseSpeed + corr, -100, 100);
         Motor(leftSpeed, rightSpeed);
-      if (DistanceValue() <= dist) {
+      if (analogRead(DIST) >  dist) {
       break;
     }
 
@@ -606,7 +606,7 @@ void bw_gyro_dist(int Speed, float kp,  char select,int dist)
         int rightSpeed = constrain(-(BackRightBaseSpeed + corr), -100, 100);
         Motor(leftSpeed, rightSpeed);
 
-    if (DistanceValue() > dist) {
+    if (analogRead(DIST) <  dist) {
       break;
     }
 
@@ -616,54 +616,3 @@ void bw_gyro_dist(int Speed, float kp,  char select,int dist)
     TrackSelectB(Speed, select);
   }
 
-
-
-  void _bw_gyro(int Speed, float kp,  char select) 
- {     
-     BaseSpeed = Speed;
-    InitialSpeed();
-    int target_speed = min(BackLeftBaseSpeed, BackRightBaseSpeed); 
-    float traveled_distance = 0;
-    unsigned long last_time = millis();
-    
-    float speed_scale = 1.6;  // ใช้ค่าที่คาลิเบรตจาก fw()
-
-    resetAngles();
-    float yaw_offset = my.gyro('z'); 
-    float _integral = 0;
-    float _prevErr = 0;
-    unsigned long prevT = millis();   
-
-    int maxLeftSpeed = BackLeftBaseSpeed;
-    int maxRightSpeed = BackRightBaseSpeed; 
-
-    while (1) 
-    {
-        unsigned long now = millis();
-        float dt = (now - prevT) / 1000.0;
-        if (dt <= 0) dt = 0.001; 
-        prevT = now;
-
-        float yaw = my.gyro('z') - yaw_offset;
-        float err = -yaw;
-
-        _integral += err * dt;
-        float deriv = (err - _prevErr) / dt;
-        _prevErr = err;
-        float corr = kp * err + 0.0001 * _integral + 0.05 * deriv;
-
-        // สปีดถอยหลัง
-        int leftSpeed  = constrain(-(BackLeftBaseSpeed - corr), -100, 100);
-        int rightSpeed = constrain(-(BackRightBaseSpeed + corr), -100, 100);
-        Motor(leftSpeed, rightSpeed);
-
-       ReadCalibrateB();
-    if (B[0] > Ref || B[1] > Ref || B[2] > Ref || B[3] > Ref || B[4] > Ref || B[5] > Ref  || B[7] > Ref) {
-      break;
-    }
-
-        delayMicroseconds(50);
-    }
-
-    TrackSelectB(Speed, select);
-  }
